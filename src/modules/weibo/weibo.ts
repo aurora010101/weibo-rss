@@ -121,13 +121,20 @@ export const statusToHTML = (status: WeiboStatus) => {
     }
   }
 
-  // 微博配图
+ // 微博配图
   if (status.pics) {
     status.pics.forEach(function (item) {
       tempHTML += "<br><br>";
       const url = config.imageCache ? (config.imageCache + encodeURIComponent(item.url)) : item.url;
       const largeUrl = config.imageCache ? (config.imageCache + encodeURIComponent(item.large.url)) : item.large.url;
-      tempHTML += '<a href="' + largeUrl + '" target="_blank"><img src="' + url+ '"></a>';
+      
+      // ----------- 修改下面这一行 -----------
+      // 原代码（显示小图，点击看大图）：
+      // tempHTML += '<a href="' + largeUrl + '" target="_blank"><img src="' + url+ '"></a>';
+      
+      // 新代码（直接显示大图）：
+      tempHTML += '<a href="' + largeUrl + '" target="_blank"><img src="' + largeUrl + '" style="max-width: 100%;"></a>'; 
+      // ------------------------------------
     });
   }
 
